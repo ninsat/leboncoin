@@ -1,0 +1,27 @@
+{
+  "name": "leboncoin",
+  "version": "0.0.1",
+  "description": "Place les annonces sur une carte",
+  "main": "app.js",
+  "scripts": {
+    "start": "beefy app.js:bundle.js --live",
+    "bundle": "browserify app.js -o bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/herbert-de-vaucanson/leboncoin.git"
+  },
+  "keywords": [
+    "leaflet",
+    "maps"
+  ],
+  "author": "leo",
+  "license": "MIT",
+  "dependencies": {
+    "leaflet": "^1.0.1"
+  },
+  "devDependencies": {
+    "beefy": "^2.1.8",
+    "browserify": "^13.1.1"
+  }
+}
