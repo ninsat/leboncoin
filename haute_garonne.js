@@ -148,7 +148,7 @@ exports.villes = {
 "Lavernose-Lacasse" : { code: "31410", lat: "43.397", long: "1.2621" },
 "Le Fauga" : { code: "31410", lat: "43.4", long: "1.283333" },
 "Léguevin" : { code: "31490", lat: "43.6", long: "1.25" },
-"Lévignac" : { code: "31530", lat: "43,67", long: "1,2" },
+"Lévignac" : { code: "31530", lat: "43.67", long: "1.2" },
 "Lherm" : { code: "31600", lat: "43.4333", long: "1.2333" },
 "Mérenvielle" : { code: "31530", lat: "43.633333", long: "1.166667" },
 "Muret" : { code: "31600", lat: "43.466667", long: "1.35" },

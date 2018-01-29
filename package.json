@@ -4,8 +4,9 @@
   "description": "Place les annonces sur une carte",
   "main": "app.js",
   "scripts": {
-    "start": "beefy app.js:bundle.js --live",
-    "bundle": "browserify app.js -o bundle.js"
+      "start": "beefy app.js:bundle.js --live",
+      "bundle": "browserify app.js -o bundle.js",
+      "prestart": "node server.js > out.js && echo ']};' >> out.js"
   },
   "repository": {
     "type": "git",

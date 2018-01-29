@@ -1,6 +1,6 @@
 const leboncoin = require('leboncoin-api');
 var search = new leboncoin.Search()
-    .setPage(0)
+    .setPage(1)
     .setQuery("maison")
     .setCategory("locations")
     .setRegion("midi_pyrenees/haute_garonne")
@@ -12,25 +12,12 @@ var search = new leboncoin.Search()
 
 console.log("exports.data = { results : [");
 
-search.run().then(function (data) {
-//    console.log(data.page); // the current page
-//    console.log(data.nbResult); // the number of results for this search
-
-//    Item {
-//  title: 'Villa 5 pièces 110 m²',
-//  category: '',
-//  link: '//www.leboncoin.fr/locations/1373415348.htm?ca=16_s',
-//  images:
-//   [ 'https://img3.leboncoin.fr/ad-thumb/0f50fed60c9708bde5dbdcd12c1aca0b21bd4048.jpg' ],
-//  location: 'Colomiers /  Haute-Garonne',
-//  urgent: false,
-//  price: 1180,
-//  date: 2018-01-23T08:02:00.670Z,
-//  id: 1373415348 }
-
+function format(data, page) {
+    console.log("[");
     for (i in data.results) {
-	console.log("{ title : '" + data.results[i].title + "',");
-	console.log("location : '" + data.results[i].location + "',");
+	console.log("{ title : \"" + data.results[i].title + "\",");
+	console.log("page : '" + page + "',");
+	console.log("location : \"" + data.results[i].location + "\",");
 	console.log("link : '" + data.results[i].link + "',");
 	console.log("price : '" + data.results[i].price + "',");
 	console.log("date : '" + data.results[i].date + "',");
@@ -39,19 +26,20 @@ search.run().then(function (data) {
 	    console.log("'"+data.results[i].images[img]+"',");
 	console.log("]},");
     }
-    console.log("]}");
-    //console.log(data.results); // the array of results
-    //console.log(data.results[0]['location']);
-    //    data.results[0].getDetails().then(function (details) {
-//        console.log(details); // the item 0 with more data such as description, all images, author, ...
-//    }, function (err) {
-//        console.error(err);
-//    });
-//    data.results[0].getPhoneNumber().then(function (phoneNumer) {
-//        console.log(phoneNumer); // the phone number of the author if available
-//    }, function (err) {
-//        console.error(err); // if the phone number is not available or not parsable (image -> string)
-//    });
+    console.log("],");
+}
+
+search.run().then(function (data) {
+    //    console.log(data.page); // the current page
+    //    console.log(data.nbResult); // the number of results for this search
+    var chain = Promise.resolve();
+    //    var chain = console.log("]};end");
+    for (var i = 1; i <= Math.ceil(data.nbResult/35); i++) {
+	//format(data);
+	search.setPage(i);
+	chain = function(page) { return search.run().then(function(d) { format(d,page); });}(i);
+    }
+    //chain = chain.then(console.log("]};end"));
 }, function (err) {
     console.error(err);
 });
