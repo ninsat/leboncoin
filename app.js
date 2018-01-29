@@ -6,7 +6,7 @@ function around(x) {
     return Math.round((Number(x) + Math.random() * 0.01 - 0.005)*10000000)/10000000;
 }
 
-var seen = {};
+var page = {};
 for (var i in data.results) {
     for (var j in data.results[i]) {
 	var d = data.results[i][j];
@@ -24,10 +24,10 @@ for (var i in data.results) {
 		    '</br>' +
 		    date.toLocaleDateString('fr-FR', options)
 	    );
-	    if (!(v in seen))
-		seen[v] = [m];
+	    if (!(d.page in page))
+		page[d.page] = [m];
 	    else
-		seen[v].push(m);
+		page[d.page].push(m);
 	}
     }
 }
@@ -52,8 +52,8 @@ var base = {
 };
 
 var overlays = {};
-for (k in seen) {
-    overlays[k] = L.layerGroup(seen[k]).addTo(map);
+for (k in page) {
+    overlays["page " + k] = L.layerGroup(page[k]).addTo(map);
 }
 
 // Add baseLayers and overlays to layer panel
