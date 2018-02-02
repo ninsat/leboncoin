@@ -1,10 +1,18 @@
 var L = require('leaflet');
 const hg = require('./haute_garonne');
 const data = require('./out').data;
+const sav = require('./sav').list;
 
 function around(x) {
     return Math.round((Number(x) + Math.random() * 0.01 - 0.005)*10000000)/10000000;
 }
+
+var red_marker = L.icon({
+    iconUrl: 'style/red_marker.png',
+});
+var blue_marker = L.icon({
+    iconUrl: 'style/blue_marker.png',
+});
 
 var page = {};
 for (var i in data.results) {
@@ -14,7 +22,7 @@ for (var i in data.results) {
 	if (v in hg.villes) {
 	    var date = new Date(d.date);
 	    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-	    var m = L.marker([around(hg.villes[v].lat), around(hg.villes[v].long)]).bindPopup(
+	    var m = L.marker([around(hg.villes[v].lat), around(hg.villes[v].long)], {icon: ((d.id in sav) ? red_marker : blue_marker) }).bindPopup(
 		'<b>' + v + ':</b>' +
 		    '<a href="http:' + d.link + '">' + d.title + '</a>' +
 		    '</br>' +
@@ -22,7 +30,9 @@ for (var i in data.results) {
 		    '</br>' +
 		    '<a href="http:' + d.link + '">' + '<img src="' + d.images[0] + '">' + '</a>' +
 		    '</br>' +
-		    date.toLocaleDateString('fr-FR', options)
+		    date.toLocaleDateString('fr-FR', options) +
+		    '</br>' +
+		    '<b>' + d.id + '</b>'
 	    );
 	    if (!(d.page in page))
 		page[d.page] = [m];
@@ -34,7 +44,7 @@ for (var i in data.results) {
 
 // Initialize the map
 var map = L.map('map', {
-  scrollWheelZoom: false
+  scrollWheelZoom: true
 });
 
 // Set the position and zoom level of the map

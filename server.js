@@ -21,6 +21,7 @@ function format(data, page) {
 	console.log("link : '" + data.results[i].link + "',");
 	console.log("price : '" + data.results[i].price + "',");
 	console.log("date : '" + data.results[i].date + "',");
+	console.log("id : " + data.results[i].id + ",");
 	console.log("images : [");
 	for (img in data.results[i].images)
 	    console.log("'"+data.results[i].images[img]+"',");
